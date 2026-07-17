@@ -1,0 +1,538 @@
+:root {
+  --rock-dark: #1a1a1c;
+  --rock-mid: #2a2a2d;
+  --snow-light: #eaeaea;
+  --sun-gold: #e8a96d;
+  --sky-soft: #f5c9a8;
+  --stone-gray: #7a7a7c;
+  --border-soft: rgba(234, 234, 234, 0.15);
+  --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --star-color: #f5c518;
+  --star-empty: #4a4a4d;
+  
+  /* Цвета соцсетей */
+  --vk-color: #2787F5;
+  --ok-color: #F58220;
+  
+  /* Цвета тегов */
+  --tag-bg: rgba(232, 169, 109, 0.15);
+  --tag-hover: rgba(232, 169, 109, 0.3);
+  --tag-border: rgba(232, 169, 109, 0.3);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--rock-dark);
+  color: var(--snow-light);
+  font-family: var(--font-main);
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(234, 234, 234, 0.03) 0%, transparent 35%),
+    radial-gradient(circle at 90% 80%, rgba(234, 234, 234, 0.02) 0%, transparent 40%);
+  gap: 16px;
+}
+
+/* ===== Баннер издательства (изображение) ===== */
+.publisher-banner {
+  max-width: 480px;
+  width: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  animation: bannerAppear 0.8s ease-out 0.1s both;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.publisher-banner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.banner-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 14px;
+}
+
+@keyframes bannerAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ===== Заголовок каталога ===== */
+.catalog-header {
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  animation: headerAppear 0.8s ease-out 0.2s both;
+}
+
+@keyframes headerAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.catalog-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--snow-light);
+  margin-bottom: 2px;
+}
+
+.catalog-title::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: var(--sun-gold);
+  margin: 6px auto 0;
+  border-radius: 2px;
+}
+
+/* ===== Карточка книги ===== */
+.book-card {
+  max-width: 480px;
+  width: 100%;
+  background: rgba(30, 30, 34, 0.92);
+  border-radius: 14px;
+  padding: 28px 20px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.6),
+    inset 0 0 16px rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--border-soft);
+  animation: cardAppear 0.8s ease-out 0.3s both;
+  transition: transform 0.2s ease;
+}
+
+@keyframes cardAppear {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.book-cover {
+  width: 100%;
+  max-width: 400px;
+  display: block;
+  margin: 0 auto 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: coverAppear 1s ease-out 0.5s both;
+}
+
+@keyframes coverAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.9) rotate(-3deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.book-cover:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.65);
+}
+
+.book-info {
+  text-align: center;
+  padding: 0 4px;
+}
+
+.book-title {
+  font-size: 1.7rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+  color: var(--snow-light);
+}
+
+.book-author {
+  font-size: 1rem;
+  color: var(--sky-soft);
+  margin-bottom: 14px;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+/* ===== Рейтинг ===== */
+.rating-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.stars {
+  display: flex;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.star {
+  font-size: 28px;
+  color: var(--star-empty);
+  transition: color 0.2s ease, transform 0.2s ease;
+  line-height: 1;
+  user-select: none;
+}
+
+.star.active {
+  color: var(--star-color);
+}
+
+.star:hover {
+  transform: scale(1.15);
+}
+
+.star.hover {
+  color: var(--star-color);
+}
+
+.star.clicked {
+  animation: starClick 0.3s ease;
+}
+
+@keyframes starClick {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+.rating-text {
+  font-size: 0.9rem;
+  color: var(--stone-gray);
+}
+
+/* ===== Описание ===== */
+.book-description {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--snow-light);
+  margin: 0 auto 20px;
+  max-width: 400px;
+  padding: 0 16px;
+  text-align: left;
+  opacity: 0.92;
+  white-space: pre-line; /* Сохраняет переносы строк из HTML */
+}
+
+/* ===== Тэги/жанры ===== */
+.tags-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--sun-gold);
+  background: var(--tag-bg);
+  border: 1px solid var(--tag-border);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+  letter-spacing: 0.2px;
+}
+
+.tag:hover {
+  background: var(--tag-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(232, 169, 109, 0.15);
+}
+
+.tag:active {
+  transform: scale(0.95);
+}
+
+.tag.active {
+  background: var(--sun-gold);
+  color: var(--rock-dark);
+  border-color: var(--sun-gold);
+  box-shadow: 0 4px 12px rgba(232, 169, 109, 0.3);
+}
+
+/* ===== Действия ===== */
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.buy-button,
+.fragment-button {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  border: none;
+  text-align: center;
+  flex: 1;
+  min-width: 140px;
+  max-width: 220px;
+}
+
+.buy-button {
+  background: var(--sun-gold);
+  color: var(--rock-dark);
+  box-shadow: 0 4px 14px rgba(232, 169, 109, 0.25);
+}
+
+.buy-button:hover {
+  background: #f0b87a;
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px rgba(232, 169, 109, 0.35);
+}
+
+.buy-button:active {
+  transform: scale(0.97);
+}
+
+.fragment-button {
+  background: transparent;
+  color: var(--snow-light);
+  border: 1px solid var(--border-soft);
+}
+
+.fragment-button:hover {
+  background: rgba(234, 234, 234, 0.08);
+  transform: scale(1.02);
+  border-color: var(--sun-gold);
+}
+
+.fragment-button:active {
+  transform: scale(0.97);
+}
+
+/* ===== Кнопки поделиться (внизу) ===== */
+.share-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.share-label {
+  color: var(--stone-gray);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* ===== ВК-сообщество (внизу) ===== */
+.social-header {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 2px;
+}
+
+.social-btn.vk-community {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 24px;
+  border-radius: 20px;
+  border: 1px solid #2787F5;
+  background: rgba(26, 26, 46, 0.8);
+  color: #2787F5;
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.3px;
+  backdrop-filter: blur(8px);
+}
+
+.social-btn.vk-community:hover {
+  background: rgba(39, 135, 245, 0.15);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 20px rgba(39, 135, 245, 0.25);
+}
+
+.social-btn.vk-community:active {
+  transform: scale(0.95);
+}
+
+/* Общие стили для социальных кнопок */
+.social-btn {
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: none;
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.3px;
+}
+
+/* ВКонтакте (поделиться) */
+.social-btn.vk {
+  background: var(--vk-color);
+  box-shadow: 0 4px 12px rgba(39, 135, 245, 0.3);
+}
+
+.social-btn.vk:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 20px rgba(39, 135, 245, 0.45);
+}
+
+.social-btn.vk:active {
+  transform: scale(0.95);
+}
+
+/* Одноклассники */
+.social-btn.ok {
+  background: var(--ok-color);
+  box-shadow: 0 4px 12px rgba(245, 130, 32, 0.3);
+}
+
+.social-btn.ok:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 20px rgba(245, 130, 32, 0.45);
+}
+
+.social-btn.ok:active {
+  transform: scale(0.95);
+}
+
+/* ===== Адаптивность ===== */
+@media (max-width: 480px) {
+  body {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .publisher-banner {
+    border-radius: 10px;
+  }
+
+  .banner-image {
+    border-radius: 10px;
+  }
+
+  .catalog-title {
+    font-size: 1.4rem;
+  }
+
+  .catalog-title::after {
+    width: 40px;
+  }
+
+  .book-card {
+    padding: 20px 16px;
+  }
+
+  .book-title {
+    font-size: 1.4rem;
+  }
+
+  .book-description {
+    max-width: 100%;
+    padding: 0 12px;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .buy-button,
+  .fragment-button {
+    width: 100%;
+    max-width: 280px;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+
+  .star {
+    font-size: 24px;
+  }
+
+  .tag {
+    font-size: 0.75rem;
+    padding: 4px 12px;
+  }
+
+  .share-buttons {
+    gap: 8px;
+  }
+
+  .social-btn {
+    padding: 6px 14px;
+    font-size: 0.8rem;
+  }
+
+  .share-label {
+    font-size: 0.8rem;
+  }
+
+  .social-btn.vk-community {
+    padding: 6px 18px;
+    font-size: 0.8rem;
+  }
+
+  .actions {
+    gap: 12px;
+  }
+}
