@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>livepagenow — издательство</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  
+  <!-- Баннер издательства (изображение) -->
+  <div class="publisher-banner">
+    <img src="image/BANNER.jpg" alt="livepagenow — издательство современной прозы" class="banner-image" id="bannerImage" loading="lazy">
+  </div>
+
+  <!-- Заголовок каталога -->
+  <header class="catalog-header">
+    <h1 class="catalog-title">Книжный каталог</h1>
+  </header>
+
+  <main class="book-card">
+    <!-- Обложка -->
+    <img src="image/COVER.jpg" alt="Обложка книги издательства livepagenow" class="book-cover" id="bookCover" loading="lazy">
+    
+    <!-- Информация о книге -->
+    <div class="book-info">
+      <h2 class="book-title" id="bookTitle">Название книги</h2>
+      <p class="book-author" id="bookAuthor">Имя Автора</p>
+      
+      <!-- Рейтинг -->
+      <div class="rating-section">
+        <div class="stars" id="starsContainer">
+          <span class="star" data-value="1">☆</span>
+          <span class="star" data-value="2">☆</span>
+          <span class="star" data-value="3">☆</span>
+          <span class="star" data-value="4">☆</span>
+          <span class="star" data-value="5">☆</span>
+        </div>
+        <span class="rating-text" id="ratingText">Оцените книгу</span>
+      </div>
+
+      <p class="book-description" id="bookDescription">
+        Алиса, девушка с душой кошки, обитает в минском квартале "Маленькая Башкирия", в родительском доме. 
+        Её возлюбленный Ирек работает журналистом на местном телевидении, в то время как Алиса постигает тайны IT-технологий.
+      </p>
+
+      <!-- Тэги/жанры -->
+      <div class="tags-section">
+        <span class="tag" data-tag="Современная проза">Современная проза</span>
+        <span class="tag" data-tag="Драма">Драма</span>
+        <span class="tag" data-tag="IT-роман">IT-роман</span>
+        <span class="tag" data-tag="Любовный роман">Любовный роман</span>
+        <span class="tag" data-tag="Городская проза">Городская проза</span>
+      </div>
+
+      <!-- Кнопки действий -->
+      <div class="actions">
+        <div class="action-buttons">
+          <a href="#" class="buy-button" id="buyButton">Купить книгу на ЛитРес</a>
+          <a href="#" class="fragment-button" id="fragmentButton" target="_blank" rel="noopener noreferrer">
+            📖 Читать фрагмент на ЛитРес
+          </a>
+        </div>
+        
+        <!-- Кнопки поделиться (внизу) -->
+        <div class="share-buttons">
+          <span class="share-label">Поделиться:</span>
+          <button class="social-btn vk" data-share="vk">ВКонтакте</button>
+          <button class="social-btn ok" data-share="ok">Одноклассники</button>
+        </div>
+
+        <!-- ВК-сообщество (внизу) -->
+        <div class="social-header">
+          <button class="social-btn vk-community" data-share="vk-community">
+            📱 ВК-сообщество
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
