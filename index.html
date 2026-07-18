@@ -13,9 +13,16 @@
     <img src="image/BANNER.jpg" alt="livepagenow — издательство современной прозы" class="banner-image" id="bannerImage" loading="lazy">
   </div>
 
+  <!-- Сноска под баннером -->
+  <div class="banner-footnote">
+    <span class="footnote-asterisk">*</span>
+    <span class="footnote-text">«Живая Страница» — книжная онлайн-площадка</span>
+  </div>
+
   <!-- Заголовок каталога -->
   <header class="catalog-header">
     <h1 class="catalog-title">Книжный каталог</h1>
+    <p class="book-counter">📚 В каталоге <span id="bookCount">1</span> книга</p>
   </header>
 
   <main class="book-card">
@@ -39,10 +46,24 @@
         <span class="rating-text" id="ratingText">Оцените книгу</span>
       </div>
 
-      <p class="book-description" id="bookDescription">
-        Алиса, девушка с душой кошки, обитает в минском квартале "Маленькая Башкирия", в родительском доме. 
-        Её возлюбленный Ирек работает журналистом на местном телевидении, в то время как Алиса постигает тайны IT-технологий.
-      </p>
+      <!-- Прогресс-бар рейтинга -->
+      <div class="rating-progress">
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+        </div>
+        <span class="progress-text" id="progressText">Рейтинг: 0%</span>
+      </div>
+
+      <!-- Кнопка копирования описания -->
+      <div class="description-wrapper">
+        <p class="book-description" id="bookDescription">
+          Алиса, девушка с душой кошки, обитает в минском квартале "Маленькая Башкирия", в родительском доме. 
+          Её возлюбленный Ирек работает журналистом на местном телевидении, в то время как Алиса постигает тайны IT-технологий.
+        </p>
+        <button class="copy-button" id="copyButton" title="Скопировать описание">
+          📋 Копировать
+        </button>
+      </div>
 
       <!-- Тэги/жанры -->
       <div class="tags-section">
@@ -67,6 +88,10 @@
           <span class="share-label">Поделиться:</span>
           <button class="social-btn vk" data-share="vk">ВКонтакте</button>
           <button class="social-btn ok" data-share="ok">Одноклассники</button>
+          <!-- NEW: Email -->
+          <button class="social-btn email" data-share="email">✉️ Email</button>
+          <!-- NEW: Копировать ссылку -->
+          <button class="social-btn copy-link" data-share="copy-link">🔗 Копировать ссылку</button>
         </div>
 
         <!-- ВК-сообщество (внизу) -->
@@ -78,6 +103,16 @@
       </div>
     </div>
   </main>
+
+  <!-- Кнопка "Наверх" -->
+  <button class="scroll-top" id="scrollTopBtn" aria-label="Наверх">
+    ↑
+  </button>
+
+  <!-- Футер с копирайтом -->
+  <footer class="site-footer">
+    <p>© 2026 livepagenow. Все права защищены.</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
