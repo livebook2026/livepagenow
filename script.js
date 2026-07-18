@@ -4,7 +4,7 @@
 const bookData = {
   title: 'Минская женщина-кошка из Маленькой Башкирии',
   author: 'Никита Кандиев',
-  description: 'Алиса, девушка с душой кошки, обитает в минском квартале "Маленькая Башкирия", в родительском доме. Её возлюбленный Ирек работает журналистом на местном телевидении, в то время как Алиса постигает тайны IT-технологий.',
+  description: 'Алиса, девушка с душой кошки, обитает в минском квартале "Маленькая Башкирия", в родительском доме. \nЕё возлюбленный Ирек работает журналистом на местном телевидении, в то время как Алиса постигает тайны IT-технологий.',
   coverUrl: 'image/COVER.jpg',
   purchaseLink: 'https://www.litres.ru/book/nikita-kandiev/minskaya-zhenschina-koshka-iz-malenkoy-bashkirii-70258831/',
   fragmentLink: 'https://www.litres.ru/book/nikita-kandiev/minskaya-zhenschina-koshka-iz-malenkoy-bashkirii-70258831/chitat-onlayn/',
@@ -61,6 +61,8 @@ function saveRating(rating) {
 
 const starsContainer = document.getElementById('starsContainer');
 const ratingText = document.getElementById('ratingText');
+const progressFill = document.getElementById('progressFill');
+const progressText = document.getElementById('progressText');
 let currentRating = loadRating();
 
 function updateStars(rating) {
@@ -74,6 +76,14 @@ function updateStars(rating) {
   } else {
     ratingText.textContent = 'Оцените книгу';
   }
+  
+  updateProgress(rating);
+}
+
+function updateProgress(rating) {
+  const percentage = (rating / 5) * 100;
+  progressFill.style.width = `${percentage}%`;
+  progressText.textContent = `Рейтинг: ${Math.round(percentage)}%`;
 }
 
 starsContainer.addEventListener('click', (e) => {
@@ -106,7 +116,90 @@ starsContainer.addEventListener('mouseleave', () => {
 });
 
 // ============================================
-// 3. Тэги/жанры
+// 3. Копирование описания
+// ============================================
+const copyButton = document.getElementById('copyButton');
+
+copyButton.addEventListener('click', async () => {
+  const description = bookData.description;
+  
+  try {
+    await navigator.clipboard.writeText(description);
+    
+    copyButton.classList.add('copied');
+    copyButton.innerHTML = '✅ Скопировано!';
+    
+    setTimeout(() => {
+      copyButton.classList.remove('copied');
+      copyButton.innerHTML = '📋 Копировать';
+    }, 2000);
+    
+    console.log('📋 Описание скопировано в буфер обмена');
+  } catch (err) {
+    const textarea = document.createElement('textarea');
+    textarea.value = description;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    
+    copyButton.classList.add('copied');
+    copyButton.innerHTML = '✅ Скопировано!';
+    
+    setTimeout(() => {
+      copyButton.classList.remove('copied');
+      copyButton.innerHTML = '📋 Копировать';
+    }, 2000);
+  }
+});
+
+// ============================================
+// 4. Кнопка "Наверх"
+// ============================================
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+window.addEventListener('scroll', () => {
+  if (window.pageYOffset > 300) {
+    scrollTopBtn.classList.add('visible');
+  } else {
+    scrollTopBtn.classList.remove('visible');
+  }
+});
+
+scrollTopBtn.addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+
+// ============================================
+// 5. Микро-анимации
+// ============================================
+document.addEventListener('DOMContentLoaded', () => {
+  const elements = document.querySelectorAll('.tag, .social-btn, .action-buttons a');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }, index * 50);
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  elements.forEach((el, index) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(10px)';
+    el.style.transition = `opacity 0.4s ease ${index * 0.05}s, transform 0.4s ease ${index * 0.05}s`;
+    observer.observe(el);
+  });
+});
+
+// ============================================
+// 6. Тэги/жанры
 // ============================================
 const tags = document.querySelectorAll('.tag');
 
@@ -126,15 +219,18 @@ tags.forEach(tag => {
 });
 
 // ============================================
-// 4. Кнопки поделиться
+// 7. Кнопки поделиться (ОБНОВЛЕНО)
 // ============================================
 function getShareUrl(platform) {
   const url = encodeURIComponent(window.location.href);
   const title = encodeURIComponent(`${bookData.title} — ${bookData.author}`);
+  const description = encodeURIComponent(bookData.description.slice(0, 100));
   
   const shareUrls = {
-    vk: `https://vk.com/share.php?url=${url}&title=${title}&description=${encodeURIComponent(bookData.description.slice(0, 100))}`,
-    ok: `https://connect.ok.ru/dk?st.cmd=WidgetSharePreview&st.shareUrl=${url}&st.comments=${title}`
+    vk: `https://vk.com/share.php?url=${url}&title=${title}&description=${description}`,
+    ok: `https://connect.ok.ru/dk?st.cmd=WidgetSharePreview&st.shareUrl=${url}&st.comments=${title}`,
+    // NEW: Email
+    email: `mailto:?subject=${title}&body=Рекомендую книгу: ${decodeURIComponent(title)}%0A%0A${decodeURIComponent(bookData.description)}%0A%0AСсылка: ${decodeURIComponent(url)}`
   };
   
   return shareUrls[platform] || '';
@@ -144,20 +240,55 @@ document.querySelectorAll('[data-share]').forEach(btn => {
   btn.addEventListener('click', () => {
     const platform = btn.dataset.share;
     
+    // ВК-сообщество
     if (platform === 'vk-community') {
       window.open(bookData.vkCommunityUrl, '_blank');
       return;
     }
     
+    // NEW: Копировать ссылку
+    if (platform === 'copy-link') {
+      const link = window.location.href;
+      navigator.clipboard.writeText(link).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = '✅ Скопировано!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = '🔗 Копировать ссылку';
+        }, 2000);
+        console.log('🔗 Ссылка скопирована:', link);
+      }).catch(() => {
+        // Fallback
+        const textarea = document.createElement('textarea');
+        textarea.value = link;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        btn.classList.add('copied');
+        btn.textContent = '✅ Скопировано!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = '🔗 Копировать ссылку';
+        }, 2000);
+      });
+      return;
+    }
+    
+    // Остальные платформы
     const shareUrl = getShareUrl(platform);
     if (shareUrl) {
-      window.open(shareUrl, '_blank', 'width=600,height=400,scrollbars=yes');
+      if (platform === 'email') {
+        window.location.href = shareUrl;
+      } else {
+        window.open(shareUrl, '_blank', 'width=600,height=400,scrollbars=yes');
+      }
     }
   });
 });
 
 // ============================================
-// 5. Покупка и фрагмент
+// 8. Покупка и фрагмент
 // ============================================
 buyBtn.addEventListener('click', (e) => {
   e.preventDefault();
