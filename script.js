@@ -9,11 +9,14 @@ const bookData = {
   purchaseLink: 'https://www.litres.ru/book/nikita-kandiev/minskaya-zhenschina-koshka-iz-malenkoy-bashkirii-70258831/',
   fragmentLink: 'https://www.litres.ru/book/nikita-kandiev/minskaya-zhenschina-koshka-iz-malenkoy-bashkirii-70258831/chitat-onlayn/',
   tags: ['Современная проза', 'Драма', 'IT-роман', 'Любовный роман', 'Городская проза'],
-  vkCommunityUrl: 'https://vk.com/livepagenow' // Замените на актуальную ссылку
+  vkCommunityUrl: 'https://vk.com/livepagenow',
+  // NEW: Дата публикации и цена
+  publishDate: '2024',
+  price: '299 ₽'
 };
 
 // ============================================
-// 1. Рендеринг основной информации
+// 1. Рендеринг
 // ============================================
 const coverEl = document.getElementById('bookCover');
 const titleEl = document.getElementById('bookTitle');
@@ -21,6 +24,9 @@ const authorEl = document.getElementById('bookAuthor');
 const descEl = document.getElementById('bookDescription');
 const buyBtn = document.getElementById('buyButton');
 const fragmentBtn = document.getElementById('fragmentButton');
+// NEW: Элементы для даты и цены
+const publishDateEl = document.getElementById('publishDate');
+const priceEl = document.getElementById('bookPrice');
 
 function renderBook() {
   coverEl.src = bookData.coverUrl;
@@ -30,12 +36,15 @@ function renderBook() {
   descEl.textContent = bookData.description;
   buyBtn.href = bookData.purchaseLink;
   fragmentBtn.href = bookData.fragmentLink;
+  // NEW: Отображение даты и цены
+  publishDateEl.textContent = bookData.publishDate;
+  priceEl.textContent = bookData.price;
 }
 
 renderBook();
 
 // ============================================
-// 2. Система рейтинга
+// 2. Рейтинг
 // ============================================
 const STORAGE_KEY = 'livepagenow_book_rating';
 
@@ -116,45 +125,7 @@ starsContainer.addEventListener('mouseleave', () => {
 });
 
 // ============================================
-// 3. Копирование описания
-// ============================================
-const copyButton = document.getElementById('copyButton');
-
-copyButton.addEventListener('click', async () => {
-  const description = bookData.description;
-  
-  try {
-    await navigator.clipboard.writeText(description);
-    
-    copyButton.classList.add('copied');
-    copyButton.innerHTML = '✅ Скопировано!';
-    
-    setTimeout(() => {
-      copyButton.classList.remove('copied');
-      copyButton.innerHTML = '📋 Копировать';
-    }, 2000);
-    
-    console.log('📋 Описание скопировано в буфер обмена');
-  } catch (err) {
-    const textarea = document.createElement('textarea');
-    textarea.value = description;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textarea);
-    
-    copyButton.classList.add('copied');
-    copyButton.innerHTML = '✅ Скопировано!';
-    
-    setTimeout(() => {
-      copyButton.classList.remove('copied');
-      copyButton.innerHTML = '📋 Копировать';
-    }, 2000);
-  }
-});
-
-// ============================================
-// 4. Кнопка "Наверх"
+// 3. Кнопка "Наверх"
 // ============================================
 const scrollTopBtn = document.getElementById('scrollTopBtn');
 
@@ -174,7 +145,7 @@ scrollTopBtn.addEventListener('click', () => {
 });
 
 // ============================================
-// 5. Микро-анимации
+// 4. Микро-анимации
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
   const elements = document.querySelectorAll('.tag, .social-btn, .action-buttons a');
@@ -199,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ============================================
-// 6. Тэги/жанры
+// 5. Тэги
 // ============================================
 const tags = document.querySelectorAll('.tag');
 
@@ -219,7 +190,7 @@ tags.forEach(tag => {
 });
 
 // ============================================
-// 7. Кнопки поделиться (ОБНОВЛЕНО)
+// 6. Шеринг
 // ============================================
 function getShareUrl(platform) {
   const url = encodeURIComponent(window.location.href);
@@ -229,7 +200,6 @@ function getShareUrl(platform) {
   const shareUrls = {
     vk: `https://vk.com/share.php?url=${url}&title=${title}&description=${description}`,
     ok: `https://connect.ok.ru/dk?st.cmd=WidgetSharePreview&st.shareUrl=${url}&st.comments=${title}`,
-    // NEW: Email
     email: `mailto:?subject=${title}&body=Рекомендую книгу: ${decodeURIComponent(title)}%0A%0A${decodeURIComponent(bookData.description)}%0A%0AСсылка: ${decodeURIComponent(url)}`
   };
   
@@ -240,13 +210,11 @@ document.querySelectorAll('[data-share]').forEach(btn => {
   btn.addEventListener('click', () => {
     const platform = btn.dataset.share;
     
-    // ВК-сообщество
     if (platform === 'vk-community') {
       window.open(bookData.vkCommunityUrl, '_blank');
       return;
     }
     
-    // NEW: Копировать ссылку
     if (platform === 'copy-link') {
       const link = window.location.href;
       navigator.clipboard.writeText(link).then(() => {
@@ -258,7 +226,6 @@ document.querySelectorAll('[data-share]').forEach(btn => {
         }, 2000);
         console.log('🔗 Ссылка скопирована:', link);
       }).catch(() => {
-        // Fallback
         const textarea = document.createElement('textarea');
         textarea.value = link;
         document.body.appendChild(textarea);
@@ -275,7 +242,6 @@ document.querySelectorAll('[data-share]').forEach(btn => {
       return;
     }
     
-    // Остальные платформы
     const shareUrl = getShareUrl(platform);
     if (shareUrl) {
       if (platform === 'email') {
@@ -288,7 +254,7 @@ document.querySelectorAll('[data-share]').forEach(btn => {
 });
 
 // ============================================
-// 8. Покупка и фрагмент
+// 7. Покупка и фрагмент
 // ============================================
 buyBtn.addEventListener('click', (e) => {
   e.preventDefault();
@@ -311,3 +277,5 @@ console.log('📚 livepagenow — книга загружена:', bookData.titl
 console.log(`⭐ Рейтинг: ${currentRating}/5`);
 console.log(`🏷️ Жанры: ${bookData.tags.join(', ')}`);
 console.log(`🔗 ВК-сообщество: ${bookData.vkCommunityUrl}`);
+console.log(`📅 Дата публикации: ${bookData.publishDate}`);
+console.log(`💰 Цена: ${bookData.price}`);
