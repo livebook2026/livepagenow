@@ -13,7 +13,6 @@
   /* Цвета соцсетей */
   --vk-color: #2787F5;
   --ok-color: #F58220;
-  /* NEW: Email и другие */
   --email-color: #EA4335;
   --copy-color: #7a7a7c;
   
@@ -45,7 +44,7 @@ body {
   gap: 16px;
 }
 
-/* ===== Баннер издательства (изображение) ===== */
+/* ===== Баннер ===== */
 .publisher-banner {
   max-width: 480px;
   width: 100%;
@@ -238,9 +237,46 @@ body {
 .book-author {
   font-size: 1rem;
   color: var(--sky-soft);
-  margin-bottom: 14px;
+  margin-bottom: 6px;
   font-weight: 400;
   opacity: 0.8;
+}
+
+/* ===== NEW: Дата публикации и цена ===== */
+.book-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  font-size: 0.85rem;
+  color: var(--stone-gray);
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.meta-item .emoji {
+  font-size: 1rem;
+}
+
+.meta-divider {
+  color: var(--border-soft);
+  opacity: 0.5;
+}
+
+.publish-date {
+  color: var(--stone-gray);
+}
+
+.book-price {
+  color: var(--sun-gold);
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
 /* ===== Рейтинг ===== */
@@ -326,9 +362,8 @@ body {
   font-weight: 500;
 }
 
-/* ===== Описание с кнопкой копирования ===== */
+/* ===== Описание ===== */
 .description-wrapper {
-  position: relative;
   margin-bottom: 20px;
   max-width: 400px;
   margin-left: auto;
@@ -340,7 +375,6 @@ body {
   line-height: 1.8;
   color: var(--snow-light);
   padding: 12px 16px;
-  padding-right: 50px;
   text-align: left;
   opacity: 0.92;
   white-space: pre-line;
@@ -354,42 +388,7 @@ body {
   background: rgba(255, 255, 255, 0.06);
 }
 
-.copy-button {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-soft);
-  border-radius: 6px;
-  color: var(--stone-gray);
-  padding: 4px 10px;
-  font-size: 0.75rem;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  font-family: var(--font-main);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.copy-button:hover {
-  background: rgba(232, 169, 109, 0.15);
-  border-color: var(--sun-gold);
-  color: var(--sun-gold);
-  transform: scale(1.05);
-}
-
-.copy-button:active {
-  transform: scale(0.95);
-}
-
-.copy-button.copied {
-  background: rgba(46, 213, 115, 0.2);
-  border-color: #2ed573;
-  color: #2ed573;
-}
-
-/* ===== Тэги/жанры ===== */
+/* ===== Тэги ===== */
 .tags-section {
   display: flex;
   flex-wrap: wrap;
@@ -430,7 +429,7 @@ body {
   box-shadow: 0 4px 12px rgba(232, 169, 109, 0.3);
 }
 
-/* ===== Действия ===== */
+/* ===== Кнопки действий ===== */
 .actions {
   display: flex;
   flex-direction: column;
@@ -496,7 +495,7 @@ body {
   transform: scale(0.97);
 }
 
-/* ===== Кнопки поделиться (внизу) ===== */
+/* ===== Шеринг ===== */
 .share-buttons {
   display: flex;
   align-items: center;
@@ -511,7 +510,6 @@ body {
   font-weight: 500;
 }
 
-/* Общие стили для социальных кнопок */
 .social-btn {
   display: inline-block;
   padding: 8px 18px;
@@ -556,7 +554,7 @@ body {
   transform: scale(0.95);
 }
 
-/* NEW: Email */
+/* Email */
 .social-btn.email {
   background: var(--email-color);
   box-shadow: 0 4px 12px rgba(234, 67, 53, 0.3);
@@ -571,7 +569,7 @@ body {
   transform: scale(0.95);
 }
 
-/* NEW: Копировать ссылку */
+/* Копировать ссылку */
 .social-btn.copy-link {
   background: var(--copy-color);
   box-shadow: 0 4px 12px rgba(122, 122, 124, 0.3);
@@ -591,7 +589,7 @@ body {
   box-shadow: 0 4px 12px rgba(46, 213, 115, 0.3);
 }
 
-/* ===== ВК-сообщество (внизу) ===== */
+/* ВК-сообщество */
 .social-header {
   display: flex;
   justify-content: center;
@@ -722,17 +720,18 @@ body {
     font-size: 1.4rem;
   }
 
+  .book-meta {
+    font-size: 0.75rem;
+    gap: 6px;
+  }
+
+  .book-price {
+    font-size: 0.85rem;
+  }
+
   .book-description {
     font-size: 0.88rem;
     padding: 10px 12px;
-    padding-right: 40px;
-  }
-
-  .copy-button {
-    font-size: 0.7rem;
-    padding: 3px 8px;
-    top: 8px;
-    right: 8px;
   }
 
   .action-buttons {
