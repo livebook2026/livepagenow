@@ -34,6 +34,17 @@
       <h2 class="book-title" id="bookTitle">Название книги</h2>
       <p class="book-author" id="bookAuthor">Имя Автора</p>
       
+      <!-- NEW: Дата публикации и цена -->
+      <div class="book-meta">
+        <span class="meta-item publish-date">
+          📅 <span id="publishDate">2024</span>
+        </span>
+        <span class="meta-divider">•</span>
+        <span class="meta-item book-price">
+          💰 <span id="bookPrice">499 ₽</span>
+        </span>
+      </div>
+      
       <!-- Рейтинг -->
       <div class="rating-section">
         <div class="stars" id="starsContainer">
@@ -54,15 +65,12 @@
         <span class="progress-text" id="progressText">Рейтинг: 0%</span>
       </div>
 
-      <!-- Кнопка копирования описания -->
+      <!-- Описание книги -->
       <div class="description-wrapper">
         <p class="book-description" id="bookDescription">
           Алиса, девушка с душой кошки, обитает в минском квартале "Маленькая Башкирия", в родительском доме. 
           Её возлюбленный Ирек работает журналистом на местном телевидении, в то время как Алиса постигает тайны IT-технологий.
         </p>
-        <button class="copy-button" id="copyButton" title="Скопировать описание">
-          📋 Копировать
-        </button>
       </div>
 
       <!-- Тэги/жанры -->
@@ -83,18 +91,16 @@
           </a>
         </div>
         
-        <!-- Кнопки поделиться (внизу) -->
+        <!-- Кнопки поделиться -->
         <div class="share-buttons">
           <span class="share-label">Поделиться:</span>
           <button class="social-btn vk" data-share="vk">ВКонтакте</button>
           <button class="social-btn ok" data-share="ok">Одноклассники</button>
-          <!-- NEW: Email -->
           <button class="social-btn email" data-share="email">✉️ Email</button>
-          <!-- NEW: Копировать ссылку -->
           <button class="social-btn copy-link" data-share="copy-link">🔗 Копировать ссылку</button>
         </div>
 
-        <!-- ВК-сообщество (внизу) -->
+        <!-- ВК-сообщество -->
         <div class="social-header">
           <button class="social-btn vk-community" data-share="vk-community">
             📱 ВК-сообщество
