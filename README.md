@@ -37,15 +37,6 @@
 
 ---
 
-## 🛠 Технологии
-
-- HTML5
-- CSS3 (Flexbox, Animations, Variables)
-- JavaScript (ES6+, localStorage)
-- Inter Font
-
----
-
 ## 📄 Лицензия
 
 MIT © 2026 livepagenow
