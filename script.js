@@ -12,7 +12,7 @@ const bookData = {
   vkCommunityUrl: 'https://vk.com/livepagenow',
   // NEW: Дата публикации и цена
   publishDate: '2024',
-  price: '299 ₽'
+  price: '299 ₽ (ЛитРес)'
 };
 
 // ============================================
