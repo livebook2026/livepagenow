@@ -6,7 +6,7 @@
   <meta name="description" content="livepagenow — издательство современной прозы. Книга «Минская женщина-кошка из Маленькой Башкирии» Никиты Кандиева.">
   <title>livepagenow — издательство</title>
   
-  <!-- ===== OPTIMIZATION: Preload для баннера и обложки ===== -->
+  <!-- Preload критических изображений -->
   <link rel="preload" href="image/BANNER.jpg" as="image" fetchpriority="high">
   <link rel="preload" href="image/COVER.jpg" as="image" fetchpriority="high">
   
@@ -14,12 +14,11 @@
 </head>
 <body>
   
-  <!-- Баннер -->
+  <!-- Баннер издательства -->
   <div class="publisher-banner">
     <img src="image/BANNER.jpg" 
          alt="livepagenow — издательство современной прозы" 
          class="banner-image" 
-         id="bannerImage" 
          loading="eager"
          width="480" 
          height="200"
@@ -27,11 +26,11 @@
   </div>
 
   <!-- Заголовок каталога -->
-  <div class="catalog-header">
-    <h2 class="catalog-title">Книжный каталог</h2>
-  </div>
+  <h2 class="catalog-title">Книжный каталог</h2>
 
+  <!-- Карточка книги -->
   <main class="book-card">
+    
     <!-- Обложка -->
     <img src="image/COVER.jpg" 
          alt="Обложка книги издательства livepagenow" 
@@ -67,15 +66,13 @@
         <span class="progress-text" id="progressText">Рейтинг: 0%</span>
       </div>
 
-      <!-- Описание -->
-      <div class="description-wrapper">
-        <p class="book-description" id="bookDescription">
-          Алиса, девушка с душой кошки, обитает в минском квартале "Маленькая Башкирия", в родительском доме. 
-          Её возлюбленный Ирек работает журналистом на местном телевидении, в то время как Алиса постигает тайны IT-технологий.
-        </p>
-      </div>
+      <!-- Описание книги -->
+      <p class="book-description" id="bookDescription">
+        Алиса, девушка с душой кошки, обитает в минском квартале "Маленькая Башкирия", в родительском доме. 
+        Её возлюбленный Ирек работает журналистом на местном телевидении, в то время как Алиса постигает тайны IT-технологий.
+      </p>
 
-      <!-- Тэги/жанры -->
+      <!-- Тэги-жанры -->
       <div class="tags-section" id="tagsSection">
         <span class="tag" data-tag="Современная проза">Современная проза</span>
         <span class="tag" data-tag="Драма">Драма</span>
@@ -84,34 +81,24 @@
         <span class="tag" data-tag="Городская проза">Городская проза</span>
       </div>
 
-      <!-- Кнопки действий -->
-      <div class="actions">
-        <div class="action-buttons">
-          <a href="#" class="buy-button" id="buyButton">Купить книгу на ЛитРес</a>
-        </div>
-        
-        <!-- ===== УДАЛЕНЫ: VK и OK кнопки ===== -->
-        <!-- ВК-сообщество -->
-        <div class="social-header">
-          <button class="social-btn vk-community" data-share="vk-community">
-            📱 ВК-сообщество
-          </button>
-        </div>
-      </div>
+      <!-- Кнопка покупки -->
+      <a href="#" class="buy-button" id="buyButton">Купить книгу на ЛитРес</a>
+      
+      <!-- Кнопка ВК-сообщества -->
+      <button class="social-btn vk-community" data-share="vk-community">
+        📱 ВК-сообщество
+      </button>
     </div>
   </main>
 
-  <!-- Кнопка "Наверх" -->
-  <button class="scroll-top" id="scrollTopBtn" aria-label="Наверх">
-    ↑
-  </button>
+  <!-- Кнопка прокрутки наверх -->
+  <button class="scroll-top" id="scrollTopBtn" aria-label="Наверх">↑</button>
 
   <!-- Футер -->
   <footer class="site-footer">
     <p>© 2026 livepagenow. Все права защищены.</p>
   </footer>
 
-  <!-- ===== OPTIMIZATION: defer для скрипта ===== -->
   <script src="script.js" defer></script>
 </body>
 </html>
