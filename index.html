@@ -3,47 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="livepagenow — издательство современной прозы. Книга «Минская женщина-кошка из Маленькой Башкирии» Никиты Кандиева.">
   <title>livepagenow — издательство</title>
+  
+  <!-- ===== OPTIMIZATION: Preload для баннера и обложки ===== -->
+  <link rel="preload" href="image/BANNER.jpg" as="image" fetchpriority="high">
+  <link rel="preload" href="image/COVER.jpg" as="image" fetchpriority="high">
+  
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   
-  <!-- Баннер издательства (изображение) -->
+  <!-- Баннер -->
   <div class="publisher-banner">
-    <img src="image/BANNER.jpg" alt="livepagenow — издательство современной прозы" class="banner-image" id="bannerImage" loading="lazy">
-  </div>
-
-  <!-- Сноска под баннером -->
-  <div class="banner-footnote">
-    <span class="footnote-asterisk">*</span>
-    <span class="footnote-text">«Живая Страница» — книжная онлайн-площадка</span>
+    <img src="image/BANNER.jpg" 
+         alt="livepagenow — издательство современной прозы" 
+         class="banner-image" 
+         id="bannerImage" 
+         loading="eager"
+         width="480" 
+         height="200"
+         decoding="async">
   </div>
 
   <!-- Заголовок каталога -->
-  <header class="catalog-header">
-    <h1 class="catalog-title">Книжный каталог</h1>
-    <p class="book-counter">📚 В каталоге <span id="bookCount">1</span> книга</p>
-  </header>
+  <div class="catalog-header">
+    <h2 class="catalog-title">Книжный каталог</h2>
+  </div>
 
   <main class="book-card">
     <!-- Обложка -->
-    <img src="image/COVER.jpg" alt="Обложка книги издательства livepagenow" class="book-cover" id="bookCover" loading="lazy">
+    <img src="image/COVER.jpg" 
+         alt="Обложка книги издательства livepagenow" 
+         class="book-cover" 
+         id="bookCover" 
+         width="400" 
+         height="600"
+         loading="eager"
+         decoding="async">
     
     <!-- Информация о книге -->
     <div class="book-info">
-      <h2 class="book-title" id="bookTitle">Название книги</h2>
+      <h3 class="book-title" id="bookTitle">Название книги</h3>
       <p class="book-author" id="bookAuthor">Имя Автора</p>
-      
-      <!-- NEW: Дата публикации и цена -->
-      <div class="book-meta">
-        <span class="meta-item publish-date">
-          📅 <span id="publishDate">2024</span>
-        </span>
-        <span class="meta-divider">•</span>
-        <span class="meta-item book-price">
-          💰 <span id="bookPrice">499 ₽</span>
-        </span>
-      </div>
       
       <!-- Рейтинг -->
       <div class="rating-section">
@@ -59,13 +61,13 @@
 
       <!-- Прогресс-бар рейтинга -->
       <div class="rating-progress">
-        <div class="progress-bar" id="progressBar">
+        <div class="progress-bar">
           <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
         </div>
         <span class="progress-text" id="progressText">Рейтинг: 0%</span>
       </div>
 
-      <!-- Описание книги -->
+      <!-- Описание -->
       <div class="description-wrapper">
         <p class="book-description" id="bookDescription">
           Алиса, девушка с душой кошки, обитает в минском квартале "Маленькая Башкирия", в родительском доме. 
@@ -74,7 +76,7 @@
       </div>
 
       <!-- Тэги/жанры -->
-      <div class="tags-section">
+      <div class="tags-section" id="tagsSection">
         <span class="tag" data-tag="Современная проза">Современная проза</span>
         <span class="tag" data-tag="Драма">Драма</span>
         <span class="tag" data-tag="IT-роман">IT-роман</span>
@@ -86,18 +88,13 @@
       <div class="actions">
         <div class="action-buttons">
           <a href="#" class="buy-button" id="buyButton">Купить книгу на ЛитРес</a>
-          <a href="#" class="fragment-button" id="fragmentButton" target="_blank" rel="noopener noreferrer">
-            📖 Читать фрагмент на ЛитРес
-          </a>
         </div>
         
-        <!-- Кнопки поделиться -->
-        <div class="share-buttons">
+        <!-- Социальные кнопки -->
+        <div class="share-buttons" id="shareButtons">
           <span class="share-label">Поделиться:</span>
           <button class="social-btn vk" data-share="vk">ВКонтакте</button>
           <button class="social-btn ok" data-share="ok">Одноклассники</button>
-          <button class="social-btn email" data-share="email">✉️ Email</button>
-          <button class="social-btn copy-link" data-share="copy-link">🔗 Копировать ссылку</button>
         </div>
 
         <!-- ВК-сообщество -->
@@ -115,11 +112,12 @@
     ↑
   </button>
 
-  <!-- Футер с копирайтом -->
+  <!-- Футер -->
   <footer class="site-footer">
     <p>© 2026 livepagenow. Все права защищены.</p>
   </footer>
 
-  <script src="script.js"></script>
+  <!-- ===== OPTIMIZATION: defer для скрипта ===== -->
+  <script src="script.js" defer></script>
 </body>
 </html>
