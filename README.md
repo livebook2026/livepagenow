@@ -16,7 +16,6 @@ https://livebook2026.github.io/livepagenow/
 - 📊 Прогресс-бар рейтинга
 - 🏷️ Интерактивные тэги-жанры
 - 🛒 Кнопка "Купить на ЛитРес"
-- 🔗 Шеринг: ВКонтакте, Одноклассники
 - 📱 ВК-сообщество
 - ↑ Кнопка "Наверх"
 
@@ -27,7 +26,6 @@ https://livebook2026.github.io/livepagenow/
 - HTML5
 - CSS3 (Flexbox, Variables)
 - JavaScript (ES6+, localStorage)
-- Google Fonts (Inter)
 
 ---
 
