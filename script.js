@@ -1,180 +1,148 @@
 /**
- * livepagenow — Оптимизированный JavaScript
- * - Удалены VK и OK кнопки
- * - Оставлен только ВК-сообщество
- * - Делегирование для тэгов
- * - Минимальный код
+ * livepagenow — Минимальный JavaScript
+ * Версия: 2.0
+ * Рейтинг, тэги, навигация, покупка
  */
 
 'use strict';
 
-// ============================================
-// 1. ДАННЫЕ КНИГИ
-// ============================================
-const bookData = {
+/* ============================================
+   1. ДАННЫЕ КНИГИ
+   ============================================ */
+
+const book = {
   title: 'Минская женщина-кошка из Маленькой Башкирии',
   author: 'Никита Кандиев',
   description: 'Алиса, девушка с душой кошки, обитает в минском квартале "Маленькая Башкирия", в родительском доме. \nЕё возлюбленный Ирек работает журналистом на местном телевидении, в то время как Алиса постигает тайны IT-технологий.',
-  coverUrl: 'image/COVER.jpg',
-  purchaseLink: 'https://www.litres.ru/book/nikita-kandiev/minskaya-zhenschina-koshka-iz-malenkoy-bashkirii-70258831/',
-  vkCommunityUrl: 'https://vk.com/livepagenow'
+  cover: 'image/COVER.jpg',
+  buy: 'https://www.litres.ru/book/nikita-kandiev/minskaya-zhenschina-koshka-iz-malenkoy-bashkirii-70258831/',
+  vk: 'https://vk.com/livepagenow'
 };
 
-// ============================================
-// 2. КЭШИРОВАНИЕ DOM
-// ============================================
-const DOM = {
-  cover: document.getElementById('bookCover'),
-  title: document.getElementById('bookTitle'),
-  author: document.getElementById('bookAuthor'),
-  description: document.getElementById('bookDescription'),
-  buyBtn: document.getElementById('buyButton'),
-  stars: document.getElementById('starsContainer'),
-  ratingText: document.getElementById('ratingText'),
-  progressFill: document.getElementById('progressFill'),
-  progressText: document.getElementById('progressText'),
-  scrollBtn: document.getElementById('scrollTopBtn'),
-  tagsSection: document.getElementById('tagsSection')
+/* ============================================
+   2. DOM-ССЫЛКИ
+   ============================================ */
+
+const $ = (id) => document.getElementById(id);
+
+const el = {
+  cover: $('bookCover'),
+  title: $('bookTitle'),
+  author: $('bookAuthor'),
+  desc: $('bookDescription'),
+  buy: $('buyButton'),
+  stars: $('starsContainer'),
+  ratingText: $('ratingText'),
+  fill: $('progressFill'),
+  progressText: $('progressText'),
+  scroll: $('scrollTopBtn'),
+  tags: document.getElementById('tagsSection')
 };
 
-// ============================================
-// 3. РЕНДЕРИНГ КНИГИ
-// ============================================
-function renderBook() {
-  DOM.cover.src = bookData.coverUrl;
-  DOM.cover.alt = `Обложка книги «${bookData.title}»`;
-  DOM.title.textContent = bookData.title;
-  DOM.author.textContent = bookData.author;
-  DOM.description.textContent = bookData.description;
-  DOM.buyBtn.href = bookData.purchaseLink;
-}
+/* ============================================
+   3. РЕНДЕРИНГ КНИГИ
+   ============================================ */
 
-renderBook();
+el.cover.src = book.cover;
+el.cover.alt = `Обложка книги «${book.title}»`;
+el.title.textContent = book.title;
+el.author.textContent = book.author;
+el.desc.textContent = book.description;
+el.buy.href = book.buy;
 
-// ============================================
-// 4. СИСТЕМА РЕЙТИНГА
-// ============================================
+/* ============================================
+   4. СИСТЕМА РЕЙТИНГА
+   ============================================ */
+
 const STORAGE_KEY = 'livepagenow_book_rating';
 
-function loadRating() {
+// Загрузка рейтинга из localStorage
+let rating = (() => {
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    return saved !== null ? parseInt(saved, 10) : 0;
+    return parseInt(localStorage.getItem(STORAGE_KEY)) || 0;
   } catch {
     return 0;
   }
+})();
+
+// Обновление звёзд и прогресс-бара
+function updateStars(r) {
+  const stars = el.stars.querySelectorAll('.star');
+  for (let i = 0; i < stars.length; i++) {
+    stars[i].classList.toggle('active', i < r);
+  }
+
+  el.ratingText.textContent = r > 0 ? `Рейтинг: ${r} из 5` : 'Оцените книгу';
+
+  const pct = (r / 5) * 100;
+  el.fill.style.width = pct + '%';
+  el.progressText.textContent = 'Рейтинг: ' + Math.round(pct) + '%';
 }
 
-function saveRating(rating) {
+// Инициализация рейтинга
+updateStars(rating);
+
+// Клик по звёздам
+el.stars.addEventListener('click', (e) => {
+  const star = e.target.closest('.star');
+  if (!star) return;
+
+  rating = parseInt(star.dataset.value);
   try {
     localStorage.setItem(STORAGE_KEY, String(rating));
   } catch {
-    // Тихая обработка
+    // Тихая обработка ошибки
   }
-}
-
-let currentRating = loadRating();
-
-function updateStars(rating) {
-  const stars = DOM.stars.querySelectorAll('.star');
-  const len = stars.length;
-  
-  for (let i = 0; i < len; i++) {
-    stars[i].classList.toggle('active', i < rating);
-  }
-  
-  DOM.ratingText.textContent = rating > 0 ? `Рейтинг: ${rating} из 5` : 'Оцените книгу';
-  updateProgress(rating);
-}
-
-function updateProgress(rating) {
-  const percentage = (rating / 5) * 100;
-  DOM.progressFill.style.width = `${percentage}%`;
-  DOM.progressText.textContent = `Рейтинг: ${Math.round(percentage)}%`;
-}
-
-updateStars(currentRating);
-
-// Обработчики рейтинга
-DOM.stars.addEventListener('click', (e) => {
-  const star = e.target.closest('.star');
-  if (!star) return;
-  
-  const rating = parseInt(star.dataset.value);
-  currentRating = rating;
-  saveRating(rating);
   updateStars(rating);
 });
 
-DOM.stars.addEventListener('mouseover', (e) => {
-  const star = e.target.closest('.star');
-  if (!star) return;
-  
-  const value = parseInt(star.dataset.value);
-  const stars = DOM.stars.querySelectorAll('.star');
-  const len = stars.length;
-  
-  for (let i = 0; i < len; i++) {
-    stars[i].classList.toggle('hover', i < value);
-  }
-});
+/* ============================================
+   5. ТЭГИ-ЖАНРЫ (делегирование)
+   ============================================ */
 
-DOM.stars.addEventListener('mouseleave', () => {
-  const stars = DOM.stars.querySelectorAll('.star');
-  const len = stars.length;
-  
-  for (let i = 0; i < len; i++) {
-    stars[i].classList.remove('hover');
-  }
-});
-
-// ============================================
-// 5. ТЭГИ (делегирование)
-// ============================================
-DOM.tagsSection.addEventListener('click', (e) => {
+el.tags.addEventListener('click', (e) => {
   const tag = e.target.closest('.tag');
   if (!tag) return;
-  
-  const tags = DOM.tagsSection.querySelectorAll('.tag');
-  const len = tags.length;
-  
-  for (let i = 0; i < len; i++) {
+
+  const tags = el.tags.querySelectorAll('.tag');
+  for (let i = 0; i < tags.length; i++) {
     tags[i].classList.remove('active');
   }
-  
   tag.classList.add('active');
 });
 
-// ============================================
-// 6. ВК-СООБЩЕСТВО
-// ============================================
-document.querySelector('.social-btn.vk-community').addEventListener('click', () => {
-  window.open(bookData.vkCommunityUrl, '_blank');
+/* ============================================
+   6. ВК-СООБЩЕСТВО
+   ============================================ */
+
+document.querySelector('.vk-community').addEventListener('click', () => {
+  window.open(book.vk, '_blank');
 });
 
-// ============================================
-// 7. КНОПКА "НАВЕРХ"
-// ============================================
-let scrollTimeout;
+/* ============================================
+   7. КНОПКА "НАВЕРХ"
+   ============================================ */
+
+let scrollTimer = null;
 
 window.addEventListener('scroll', () => {
-  if (scrollTimeout) return;
-  
-  scrollTimeout = requestAnimationFrame(() => {
-    const isVisible = window.pageYOffset > 300;
-    DOM.scrollBtn.classList.toggle('visible', isVisible);
-    scrollTimeout = null;
+  if (scrollTimer) return;
+
+  scrollTimer = requestAnimationFrame(() => {
+    el.scroll.classList.toggle('visible', window.pageYOffset > 300);
+    scrollTimer = null;
   });
 });
 
-DOM.scrollBtn.addEventListener('click', () => {
+el.scroll.addEventListener('click', () => {
   window.scrollTo(0, 0);
 });
 
-// ============================================
-// 8. ПОКУПКА
-// ============================================
-DOM.buyBtn.addEventListener('click', (e) => {
+/* ============================================
+   8. КНОПКА ПОКУПКИ
+   ============================================ */
+
+el.buy.addEventListener('click', (e) => {
   e.preventDefault();
-  window.open(bookData.purchaseLink, '_blank');
+  window.open(book.buy, '_blank');
 });
